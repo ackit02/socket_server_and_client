@@ -1,5 +1,6 @@
 import socket
 import random
+import argparse
 #Making standart socket and trying to bind it with local ip and random port
 old_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 while 1:
@@ -8,7 +9,10 @@ while 1:
         break
     except:
         None
-old_socket.connect(("192.168.1.23", 8000))
+ip = argparse.ArgumentParser()
+ip.add_argument("--ip",help = "Servers IP address to what you need to connect")
+adress = ip.parse_args().ip
+old_socket.connect((adress, 8009))
 #Making new socket for future connection
 new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 random_port = 0
@@ -16,7 +20,7 @@ random_port = 0
 while 1:
     try:
         random_port = random.randint(1001, 65535)
-        new_socket.bind(("192.168.1.23", random_port))
+        new_socket.bind((socket.gethostbyname(socket.gethostname()), random_port))
         break
     except:
         None
