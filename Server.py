@@ -1,6 +1,11 @@
 import threading
 import socket
 import random
+def openprint():
+  return 1
+def closeprint():
+  return 2 
+command_list = {"open":openprint,"close":closeprint}
 #this is function for theard, that mean that it should work multiply times
 def connection(conne,addr):
     new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,7 +16,7 @@ def connection(conne,addr):
             break
         except:
             None
-#Server sending this message to make show, that server is ready to recv new port from client 
+#Server sending this message to make show, that server is ready to recv new port from client
     conne.send("ok".encode("UTF-8"))
     port = int(conn.recv(1024).decode("UTF-8"))
     address = (addr[0], port)
@@ -25,16 +30,28 @@ def connection(conne,addr):
     global x
     x = 1
     while 1:
+      try:
         message = new_socket.recv(1024)
         try:
+          if message != b'':
             print(f"{nickname}:{message.decode('UTF-8')}")
+            print(command_list[message.decode("UTF-8")]())
+          else:
+            print(f"Connection with {nickname} finished")
+            break
         except:
-            None
+          None
+      except:
+        break
+    return None
+        
+    
 x = 0
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind((socket.gethostbyname(socket.gethostname()), 8009))
 while 1:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind((socket.gethostbyname(socket.gethostname()), 8000))
 #Server make standart socket with constant port
+    print(f"{socket.gethostbyname(socket.gethostname())}")
     sock.listen(5)
     conn, addr = sock.accept()
 #Now new theard taking socket and function "connection"
