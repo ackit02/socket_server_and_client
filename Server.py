@@ -7,7 +7,7 @@ def connection(conne,addr):
 #I'm trying binding excited socket with my local ip and random port
     while 1:
         try:
-            new_socket.bind(("192.168.1.23", random.randint(1001, 65335)))
+            new_socket.bind((socket.gethostbyname(socket.gethostname()), random.randint(1001, 65335)))
             break
         except:
             None
@@ -33,7 +33,7 @@ def connection(conne,addr):
 x = 0
 while 1:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(("192.168.1.23", 8000))
+    sock.bind((socket.gethostbyname(socket.gethostname()), 8000))
 #Server make standart socket with constant port
     sock.listen(5)
     conn, addr = sock.accept()
