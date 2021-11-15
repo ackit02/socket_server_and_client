@@ -4,7 +4,7 @@ import random
 old_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 while 1:
     try:
-        old_socket.bind(("192.168.1.23", random.randint(1001, 65335)))
+        old_socket.bind((socket.gethostbyname(socket.gethostname()), random.randint(1001, 65335)))
         break
     except:
         None
