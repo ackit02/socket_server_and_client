@@ -1,0 +1,5 @@
+open: Just print text, for testing
+closeprint: Just print other text for testing
+create_db:Make new database   required 'name'
+help: Printing information about commands    optional - required command name to get information about command
+close: Closing connecting with server
